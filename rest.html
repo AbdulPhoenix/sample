@@ -6,7 +6,6 @@
     <title>Global Adrasakka Biriyani and Mutta Mittai</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/lib/qrcode.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -62,18 +61,11 @@
             box-shadow: 0 12px 25px rgba(39,174,96,0.5);
         }
 
-        #qrCode {
-            margin-top: 30px;
+        .note {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #e74c3c;
             text-align: center;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-        }
-        #qrCode img {
-            max-width: 250px;
-            border: 10px solid white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         @media (max-width: 480px) {
@@ -132,11 +124,8 @@
             <small id="payText">Select items to enable payment</small>
         </div>
 
-        <div id="qrCode">
-            <p><strong>Scan with any UPI app to Pay</strong></p>
-            <p>Your Name/Business: Global Adrasakka Biriyani</p>
-            <div id="qrCanvas"></div>
-        </div>
+        <p class="note">Note: Direct UPI app opening works best on Android mobile with installed apps (Google Pay, PhonePe, etc.).<br>
+        The payee name (Global Adrasakka Biriyani) should appear in the app if supported by your UPI ID type.</p>
     </div>
 
     <script>
@@ -144,14 +133,9 @@
         const totalDisplay = document.getElementById('total');
         const payButton = document.getElementById('payButton');
         const payText = document.getElementById('payText');
-        const qrCodeDiv = document.getElementById('qrCode');
-        const qrCanvas = document.getElementById('qrCanvas');
 
-        // Your UPI ID (this is a personal @oksbi from Google Pay / SBI)
+        // CHANGE THIS TO YOUR REAL UPI ID !!!
         const YOUR_UPI_ID = "madhu15901ps-@oksbi";
-
-        // Your business/merchant name - this will show as payee name
-        const PAYEE_NAME = "Global Adrasakka Biriyani";
 
         let currentAmount = 0;
 
@@ -167,35 +151,10 @@
             if (currentAmount > 0) {
                 payButton.classList.add('active');
                 payText.textContent = "Click here to Pay via UPI";
-                generateQR(currentAmount);
             } else {
                 payButton.classList.remove('active');
                 payText.textContent = "Select items to enable payment";
-                qrCodeDiv.style.display = 'none';
             }
-        }
-
-        function generateQR(amount) {
-            const transactionId = 'Order' + Date.now();
-            const params = new URLSearchParams({
-                pa: YOUR_UPI_ID,
-                pn: PAYEE_NAME,
-                tn: 'Biriyani Order - ' + transactionId,
-                am: amount,
-                cu: 'INR',
-                tr: transactionId,
-                mc: '5812'  // MCC for Restaurants - helps some apps recognize it better
-            });
-            const upiLink = 'upi://pay?' + params.toString();
-
-            qrCanvas.innerHTML = '';
-            new QRCode(qrCanvas, {
-                text: upiLink,
-                width: 250,
-                height: 250,
-                colorDark: "#000000",
-                colorLight: "#ffffff"
-            });
         }
 
         payButton.addEventListener('click', function() {
@@ -204,24 +163,22 @@
                 return;
             }
 
+            // Generate fresh transaction ID
             const transactionId = 'Order' + Date.now();
+
             const params = new URLSearchParams({
                 pa: YOUR_UPI_ID,
-                pn: PAYEE_NAME,
+                pn: 'Global Adrasakka Biriyani',  // Payee name - should show if your UPI supports it
                 tn: 'Biriyani Order - ' + transactionId,
                 am: currentAmount,
                 cu: 'INR',
-                tr: transactionId,
-                mc: '5812'
+                tr: transactionId
             });
+
             const upiLink = 'upi://pay?' + params.toString();
 
-            // Try to open UPI app (works on Android mobile)
+            // Direct redirect to UPI intent (no QR)
             window.location.href = upiLink;
-
-            // Always show QR as reliable fallback
-            qrCodeDiv.style.display = 'flex';
-            qrCodeDiv.scrollIntoView({ behavior: 'smooth' });
         });
 
         checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateTotal));
