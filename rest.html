@@ -6,12 +6,9 @@
     <title>Global Adrasakka Biriyani and Mutta Mittai</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style> 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <script src="https://cdn.jsdelivr.net/npm/qrcode.js@1.0.0/lib/qrcode.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1606491956688-43d88d9f3f6c?ixlib=rb-4.0.3&auto=format&fit=crop&q=80') no-repeat center center fixed;
@@ -23,110 +20,62 @@
             align-items: center;
             padding: 40px 20px;
         }
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .subtitle {
-            color: #ffd700;
-            font-size: 1.3rem;
-            margin-bottom: 40px;
-            text-align: center;
-        }
-        .menu-container {
-            max-width: 600px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            padding: 40px;
-            backdrop-filter: blur(10px);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #c0392b;
-            font-size: 2rem;
-        }
-        .item {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        .item input[type="checkbox"] {
-            display: none;
-        }
-        .item label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1.2rem;
-            font-weight: 500;
-        }
-        .item .custom-checkbox {
-            width: 28px;
-            height: 28px;
-            border: 3px solid #e74c3c;
-            border-radius: 8px;
-            margin-right: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        .item input:checked + label .custom-checkbox {
-            background: #e74c3c;
-            border-color: #c0392b;
-        }
-        .item input:checked + label .custom-checkbox::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: white;
-            font-size: 16px;
-        }
-        .item-details {
-            flex: 1;
-        }
-        .item-name {
-            font-weight: 600;
-            color: #2c3e50;
-        }
-        .item-price {
-            color: #e67e22;
-            font-weight: 600;
-            font-size: 1.3rem;
-        }
-        .icon {
-            font-size: 2rem;
-            margin-right: 20px;
-            color: #f39c12;
-        }
-        .total {
+        h1 { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: #fff; text-shadow: 2px 2px 8px rgba(0,0,0,0.7); margin-bottom: 20px; text-align: center; }
+        .subtitle { color: #ffd700; font-size: 1.3rem; margin-bottom: 40px; text-align: center; }
+        .menu-container { max-width: 600px; width: 100%; background: rgba(255, 255, 255, 0.95); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.3); padding: 40px; backdrop-filter: blur(10px); }
+        h2 { text-align: center; margin-bottom: 30px; color: #c0392b; font-size: 2rem; }
+        .item { display: flex; align-items: center; background: #fff; border-radius: 15px; padding: 20px; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .item input[type="checkbox"] { display: none; }
+        .item label { display: flex; align-items: center; cursor: pointer; width: 100%; font-size: 1.2rem; font-weight: 500; }
+        .item .custom-checkbox { width: 28px; height: 28px; border: 3px solid #e74c3c; border-radius: 8px; margin-right: 20px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+        .item input:checked + label .custom-checkbox { background: #e74c3c; border-color: #c0392b; }
+        .item input:checked + label .custom-checkbox::after { content: '\f00c'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: white; font-size: 16px; }
+        .item-details { flex: 1; }
+        .item-name { font-weight: 600; color: #2c3e50; }
+        .item-price { color: #e67e22; font-weight: 600; font-size: 1.3rem; }
+        .icon { font-size: 2rem; margin-right: 20px; color: #f39c12; }
+
+        /* Pay Button Styles */
+        #payButton {
             text-align: center;
             margin-top: 40px;
-            padding: 20px;
+            padding: 25px;
             background: #27ae60;
             color: white;
             border-radius: 15px;
             font-size: 1.8rem;
             font-weight: 600;
             box-shadow: 0 8px 20px rgba(39,174,96,0.4);
+            cursor: not-allowed;
+            opacity: 0.6;
+            transition: all 0.3s ease;
         }
+        #payButton.active {
+            background: #27ae60;
+            cursor: pointer;
+            opacity: 1;
+        }
+        #payButton.active:hover {
+            background: #219653;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(39,174,96,0.5);
+        }
+
+        #qrCode {
+            margin-top: 30px;
+            text-align: center;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        #qrCode img {
+            max-width: 250px;
+            border: 10px solid white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
         @media (max-width: 480px) {
             h1 { font-size: 2.5rem; }
             .menu-container { padding: 20px; }
@@ -178,30 +127,103 @@
             </label>
         </div>
         
-        <div class="total">
-            Total Amount: ₹<span id="total">0</span>
+        <div id="payButton">
+            Total Amount: ₹<span id="total">0</span><br>
+            <small id="payText">Select items to enable payment</small>
+        </div>
+
+        <div id="qrCode">
+            <p><strong>Scan with any UPI app to Pay</strong></p>
+            <div id="qrCanvas"></div>
         </div>
     </div>
 
     <script>
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
         const totalDisplay = document.getElementById('total');
+        const payButton = document.getElementById('payButton');
+        const payText = document.getElementById('payText');
+        const qrCodeDiv = document.getElementById('qrCode');
+        const qrCanvas = document.getElementById('qrCanvas');
+
+        // CHANGE THIS TO YOUR REAL UPI ID !!!
+        const YOUR_UPI_ID = "your-upi-id@bank";  // Example: 9876543210@upi or merchant@okbizaxis
+
+        let currentAmount = 0;
 
         function updateTotal() {
-            let total = 0;
+            currentAmount = 0;
             checkboxes.forEach(checkbox => {
                 if (checkbox.checked) {
-                    total += parseInt(checkbox.value);
+                    currentAmount += parseInt(checkbox.value);
                 }
             });
-            totalDisplay.textContent = total;
+            totalDisplay.textContent = currentAmount;
+
+            if (currentAmount > 0) {
+                payButton.classList.add('active');
+                payText.textContent = "Click here to Pay via UPI";
+                generateQR(currentAmount);
+            } else {
+                payButton.classList.remove('active');
+                payText.textContent = "Select items to enable payment";
+                qrCodeDiv.style.display = 'none';
+            }
         }
 
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateTotal);
+        function generateQR(amount) {
+            const transactionId = 'Order' + Date.now();
+            const params = new URLSearchParams({
+                pa: YOUR_UPI_ID,
+                pn: 'Global Adrasakka Biriyani',
+                tn: 'Biriyani Order - ' + transactionId,
+                am: amount,
+                cu: 'INR',
+                tr: transactionId,
+                mc: '0000'
+            });
+            const upiLink = 'upi://pay?' + params.toString();
+
+            qrCanvas.innerHTML = '';
+            new QRCode(qrCanvas, {
+                text: upiLink,
+                width: 250,
+                height: 250,
+                colorDark: "#000000",
+                colorLight: "#ffffff"
+            });
+        }
+
+        // Only add click listener once
+        payButton.addEventListener('click', function() {
+            if (currentAmount === 0) {
+                alert('Please select at least one item!');
+                return;
+            }
+
+            // Generate fresh link
+            const transactionId = 'Order' + Date.now();
+            const params = new URLSearchParams({
+                pa: YOUR_UPI_ID,
+                pn: 'Global Adrasakka Biriyani',
+                tn: 'Biriyani Order - ' + transactionId,
+                am: currentAmount,
+                cu: 'INR',
+                tr: transactionId,
+                mc: '0000'
+            });
+            const upiLink = 'upi://pay?' + params.toString();
+
+            // Try to open UPI app
+            window.location.href = upiLink;
+
+            // Show QR as fallback (especially on desktop)
+            qrCodeDiv.style.display = 'flex';
+            qrCodeDiv.scrollIntoView({ behavior: 'smooth' });
         });
 
-        updateTotal();
+        checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateTotal));
+        updateTotal(); // Initial call
     </script>
 </body>
 </html>
