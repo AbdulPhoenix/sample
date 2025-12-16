@@ -134,6 +134,7 @@
 
         <div id="qrCode">
             <p><strong>Scan with any UPI app to Pay</strong></p>
+            <p>Your Name/Business: Global Adrasakka Biriyani</p>
             <div id="qrCanvas"></div>
         </div>
     </div>
@@ -146,8 +147,11 @@
         const qrCodeDiv = document.getElementById('qrCode');
         const qrCanvas = document.getElementById('qrCanvas');
 
-        // CHANGE THIS TO YOUR REAL UPI ID !!!
-        const YOUR_UPI_ID = "madhu15901ps-@oksbi";  // Example: 9876543210@upi or merchant@okbizaxis
+        // Your UPI ID (this is a personal @oksbi from Google Pay / SBI)
+        const YOUR_UPI_ID = "madhu15901ps-@oksbi";
+
+        // Your business/merchant name - this will show as payee name
+        const PAYEE_NAME = "Global Adrasakka Biriyani";
 
         let currentAmount = 0;
 
@@ -175,12 +179,12 @@
             const transactionId = 'Order' + Date.now();
             const params = new URLSearchParams({
                 pa: YOUR_UPI_ID,
-                pn: 'Global Adrasakka Biriyani',
+                pn: PAYEE_NAME,
                 tn: 'Biriyani Order - ' + transactionId,
                 am: amount,
                 cu: 'INR',
                 tr: transactionId,
-                mc: '0000'
+                mc: '5812'  // MCC for Restaurants - helps some apps recognize it better
             });
             const upiLink = 'upi://pay?' + params.toString();
 
@@ -194,36 +198,34 @@
             });
         }
 
-        // Only add click listener once
         payButton.addEventListener('click', function() {
             if (currentAmount === 0) {
                 alert('Please select at least one item!');
                 return;
             }
 
-            // Generate fresh link
             const transactionId = 'Order' + Date.now();
             const params = new URLSearchParams({
-                pa: 'madhu15901ps-@oksbi',
-                pn: 'Global Adrasakka Biriyani',
+                pa: YOUR_UPI_ID,
+                pn: PAYEE_NAME,
                 tn: 'Biriyani Order - ' + transactionId,
                 am: currentAmount,
                 cu: 'INR',
                 tr: transactionId,
-                mc: '0000'
+                mc: '5812'
             });
             const upiLink = 'upi://pay?' + params.toString();
 
-            // Try to open UPI app
+            // Try to open UPI app (works on Android mobile)
             window.location.href = upiLink;
 
-            // Show QR as fallback (especially on desktop)
+            // Always show QR as reliable fallback
             qrCodeDiv.style.display = 'flex';
             qrCodeDiv.scrollIntoView({ behavior: 'smooth' });
         });
 
         checkboxes.forEach(checkbox => checkbox.addEventListener('change', updateTotal));
-        updateTotal(); // Initial call
+        updateTotal();
     </script>
 </body>
 </html>
